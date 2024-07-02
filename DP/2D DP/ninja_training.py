@@ -81,9 +81,11 @@ def ninja_training_memoization(day:int, last:int, task:List[List[int]] , dp:List
         return dp[day][last]
     
     for i in range(3):
-        points = task[day][i] + ninja_training_recursion(day-1, i, task)
 
-        maxi = max(maxi, points)
+        if i!= last:
+            points = task[day][i] + ninja_training_recursion(day-1, i, task)
+
+            maxi = max(maxi, points)
 
     dp[day][last] = maxi
     return dp[day][last]
@@ -107,7 +109,7 @@ def ninja_training_tabulation( points:List[List[int]])->int:
     
 
     for day in range(1, days):
-        for last in range(0, days):
+        for last in range(0, 4):
             dp[day][last] = 0
 
             for task in range(0, 3):
@@ -125,7 +127,7 @@ def ninja_training_tabulation_optimized( points:List[List[int]])->int:
 
     days = len(points)
 
-    dp = [0] * days
+    dp = [0] * 4
 
 
     # Base Case | Filling values for zeroth day
@@ -149,7 +151,7 @@ def ninja_training_tabulation_optimized( points:List[List[int]])->int:
         dp = temp
     
 
-    return dp[days - 1]
+    return dp[3]
         
 
 
